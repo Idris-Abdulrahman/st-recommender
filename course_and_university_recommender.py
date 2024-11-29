@@ -4,7 +4,8 @@
 # Chat Q&A Framework for RAG Apps
 
 # Imports 
-from langchain_community.vectorstores import Chroma
+#from langchain_community.vectorstores import Chroma
+from langchain_chroma import Chroma
 from langchain_community.chat_message_histories import StreamlitChatMessageHistory
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
@@ -23,8 +24,23 @@ import uuid
 st.set_page_config(page_title="University and Course Recommender", layout="wide")
 st.title("University and Course Recommender")
 
-# Load the API Key securely
+#Load the API Key securely
+
 OPENAI_API_KEY = yaml.safe_load(open('credentials.yml'))['openai']
+
+import os
+
+#OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
+
+from dotenv import load_dotenv
+load_dotenv()
+
+def get_api_key():
+    api_key = os.environ.get("OPENAI_API_KEY")
+    if api_key is None:
+        raise ValueError("OpenAI API key not found. Please set the OPENAI_API_KEY environment variable.")
+    return api_key
+
 
 # Set up memory
 import streamlit as st
@@ -62,7 +78,7 @@ def create_rag_chain(api_key):
          temperature=0.4, 
          api_key=api_key,
          max_tokens=3500,
-     )
+    )
 
     #llm = ChatOllama(
     #    model="llama3"
