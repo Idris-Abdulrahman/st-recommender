@@ -26,20 +26,13 @@ st.title("University and Course Recommender")
 
 #Load the API Key securely
 
-OPENAI_API_KEY = yaml.safe_load(open('credentials.yml'))['openai']
+# OPENAI_API_KEY = yaml.safe_load(open('credentials.yml'))['openai']
 
 import os
-
-#OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
+OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
 
 from dotenv import load_dotenv
 load_dotenv()
-
-def get_api_key():
-    api_key = os.environ.get("OPENAI_API_KEY")
-    if api_key is None:
-        raise ValueError("OpenAI API key not found. Please set the OPENAI_API_KEY environment variable.")
-    return api_key
 
 
 # Set up memory
@@ -58,6 +51,8 @@ if len(msgs.messages) == 0:
     msgs.add_ai_message("How can I help you?")
 
 view_messages = st.expander("View the message contents in session state")
+
+
 
 def create_rag_chain(api_key):
     
