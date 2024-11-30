@@ -34,6 +34,13 @@ OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
 from dotenv import load_dotenv
 load_dotenv()
 
+def get_api_key():
+    """Fetch the OpenAI API key from environment variables."""
+    api_key = os.environ.get("OPENAI_API_KEY")
+    if not api_key:
+        raise ValueError("OpenAI API key not found. Please set the OPENAI_API_KEY environment variable.")
+    return api_key
+
 
 # Set up memory
 import streamlit as st
@@ -54,26 +61,62 @@ view_messages = st.expander("View the message contents in session state")
 
 
 
-def create_rag_chain(api_key):
-    
+def create_rag_chain():
+    """Create RAG chain with embeddings and retriever."""
+    # Get API key
+    api_key = get_api_key()
+    print(f"API Key: {api_key}")
+
+    # Initialize OpenAI embeddings
     embedding_function = OpenAIEmbeddings(
-        model='text-embedding-ada-002',
-        api_key=OPENAI_API_KEY
-        #chunk_size=500,
+        model="text-embedding-ada-002",
+        api_key=api_key
     )
+    print("Embedding function initialized.")
+
+    # Initialize Chroma vector store
     vectorstore = Chroma(
         persist_directory="data/chroma_store",
         embedding_function=embedding_function
     )
-    
+    print("Vectorstore initialized.")
+
+    # Create retriever
     retriever = vectorstore.as_retriever()
-    
+
+    # Initialize language model
     llm = ChatOpenAI(
-         model="gpt-3.5-turbo", 
-         temperature=0.4, 
-         api_key=OPENAI_API_KEY,
-         max_tokens=3500,
+        model="gpt-3.5-turbo",
+        temperature=0.4,
+        api_key=api_key,
+        max_tokens=3500
     )
+    print("Language model initialized.")
+
+    return retriever, llm
+
+
+
+# def create_rag_chain(api_key):
+    
+#     embedding_function = OpenAIEmbeddings(
+#         model='text-embedding-ada-002',
+#         api_key=api_key
+#         #chunk_size=500,
+#     )
+#     vectorstore = Chroma(
+#         persist_directory="data/chroma_store",
+#         embedding_function=embedding_function
+#     )
+    
+#     retriever = vectorstore.as_retriever()
+    
+#     llm = ChatOpenAI(
+#          model="gpt-3.5-turbo", 
+#          temperature=0.4,
+#          api_key=api_key,
+#          max_tokens=3500,
+#     )
 
     #llm = ChatOllama(
     #    model="llama3"
