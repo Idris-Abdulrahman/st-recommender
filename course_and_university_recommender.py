@@ -26,7 +26,7 @@ st.title("University and Course Recommender")
 
 #Load the API Key securely
 
-#v OPENAI_API_KEY = yaml.safe_load(open('credentials.yml'))['openai']
+# OPENAI_API_KEY = yaml.safe_load(open('credentials.yml'))['openai']
 
 import os
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
