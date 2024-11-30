@@ -28,7 +28,6 @@ st.title("University and Course Recommender")
 
 OPENAI_API_KEY = yaml.safe_load(open('credentials.yml'))['openai']
 
-
 # Set up memory
 import streamlit as st
 
