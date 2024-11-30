@@ -61,7 +61,7 @@ view_messages = st.expander("View the message contents in session state")
 
 
 
-def create_rag_chain():
+def create_rag_chain(api_key):
     """Create RAG chain with embeddings and retriever."""
     # Get API key
     api_key = get_api_key()
@@ -91,34 +91,32 @@ def create_rag_chain():
         api_key=api_key,
         max_tokens=3500
     )
-    print("Language model initialized.")
-
-    return retriever, llm
-
-
-
-# def create_rag_chain(api_key):
     
-#     embedding_function = OpenAIEmbeddings(
-#         model='text-embedding-ada-002',
-#         api_key=api_key
-#         #chunk_size=500,
-#     )
-#     vectorstore = Chroma(
-#         persist_directory="data/chroma_store",
-#         embedding_function=embedding_function
-#     )
-    
-#     retriever = vectorstore.as_retriever()
-    
-#     llm = ChatOpenAI(
-#          model="gpt-3.5-turbo", 
-#          temperature=0.4,
-#          api_key=api_key,
-#          max_tokens=3500,
-#     )
 
-    #llm = ChatOllama(
+
+
+ #  def create_rag_chain(api_key):
+    
+ #     embedding_function = OpenAIEmbeddings(
+ #         model='text-embedding-ada-002',
+ #         api_key=api_key
+ #         #chunk_size=500,
+ #     )
+ #     vectorstore = Chroma(
+ #         persist_directory="data/chroma_store",
+ #         embedding_function=embedding_function
+ #     )
+    
+ #     retriever = vectorstore.as_retriever()
+    
+ #     llm = ChatOpenAI(
+ #          model="gpt-3.5-turbo", 
+ #          temperature=0.4,
+ #          api_key=api_key,
+ #          max_tokens=3500,
+ #     )
+
+    # llm = ChatOllama(
     #    model="llama3"
     #    #model="llama3:70b"
     #   )
