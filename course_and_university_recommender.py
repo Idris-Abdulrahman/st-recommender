@@ -26,7 +26,7 @@ st.title("University and Course Recommender")
 
 #Load the API Key securely
 
-# OPENAI_API_KEY = yaml.safe_load(open('credentials.yml'))['openai']
+#v OPENAI_API_KEY = yaml.safe_load(open('credentials.yml'))['openai']
 
 import os
 OPENAI_API_KEY = os.environ.get('OPENAI_API_KEY')
@@ -58,7 +58,7 @@ def create_rag_chain(api_key):
     
     embedding_function = OpenAIEmbeddings(
         model='text-embedding-ada-002',
-        api_key=api_key
+        api_key=OPENAI_API_KEY
         #chunk_size=500,
     )
     vectorstore = Chroma(
@@ -71,7 +71,7 @@ def create_rag_chain(api_key):
     llm = ChatOpenAI(
          model="gpt-3.5-turbo", 
          temperature=0.4, 
-         api_key=api_key,
+         api_key=OPENAI_API_KEY,
          max_tokens=3500,
     )
 
